@@ -28,4 +28,49 @@ const init = async (_) => {
       console.log(`${object.fullName} found!`);
     }
   } while (!object);
+  Object.assign(
+    object,
+    await prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "What is the title project?",
+      },
+      {
+        type: "Description",
+        name: "desc",
+        message: "What is the description?",
+      },
+      {
+        type: "input",
+        name: "toc",
+        message: "What is the table of contents?",
+      },
+      {
+        type: "input",
+        name: "inst",
+        message: "What are the installation installation instructions?",
+      },
+      {
+        type: "input",
+        name: "usage",
+        message: "What is the Usage for?",
+      },
+      {
+        type: "input",
+        name: "lisc",
+        message: "Any Licenses?",
+      },
+      {
+        type: "input",
+        name: "contr",
+        message: "Who contributed to the project?",
+      },
+      {
+        type: "input",
+        name: "questions",
+        message: "Any questions?",
+      },
+    ])
+  );
 };

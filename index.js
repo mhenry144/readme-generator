@@ -4,6 +4,18 @@
 
 //THEN a README for the repo is generated
 
+const fs = require("fs");
+const githubAPI = require("./githubAPI.js");
+const prompt = require("inquirer").createPromptModule();
+
+const generateReadMe = require("./generateReadMe.js");
+
+const generateMD = (fileName, data) => {
+  fs.generateMD(fileName + ".md", data, (error) =>
+    error ? console.error(error) : console.log(`${fileName + ".md"} generated!`)
+  );
+};
+
 const init = async (_) => {
   let object = {};
   do {
@@ -73,4 +85,7 @@ const init = async (_) => {
       },
     ])
   );
+  generateMD(ojbect.title, await generateReadMe(object));
 };
+
+init();

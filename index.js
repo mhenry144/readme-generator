@@ -70,7 +70,7 @@ const init = async (_) => {
       },
       {
         type: "input",
-        name: "lisc",
+        name: "lic",
         message: "Any Licenses?",
       },
       {

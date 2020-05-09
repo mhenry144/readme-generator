@@ -1,5 +1,6 @@
 const generateReadMe = (data) => {
   return `
+  <a href="${data.link}" title="${data.name}"</a>
   
   # ${data.title.toUpperCase()}
   
@@ -16,9 +17,6 @@ const generateReadMe = (data) => {
   
   __Contributors:__
   ${data.contr}
-  
-  __Tests:__
-  ${data.test}
   
   __Questions:__
   ${data.questions}

@@ -3,15 +3,14 @@
 //WHEN prompted for the developer's GitHub username and repo specific information
 
 //THEN a README for the repo is generated
-
+const prompt = require("inquirer").createPromptModule();
 const fs = require("fs");
 const githubAPI = require("./githubAPI.js");
-const prompt = require("inquirer").createPromptModule();
 
 const generateReadMe = require("./generateReadMe.js");
 
 const generateMD = (fileName, data) => {
-  fs.generateMD(fileName + ".md", data, (error) =>
+  fs.writeFile(fileName + ".md", data, (error) =>
     error ? console.error(error) : console.log(`${fileName + ".md"} generated!`)
   );
 };
@@ -19,27 +18,26 @@ const generateMD = (fileName, data) => {
 const init = async (_) => {
   let object = {};
   do {
-    const { userName } = await prompt([
+    const { userName, repository } = await prompt([
       {
         type: "input",
         name: "userName",
         message: "What is your Github user name?",
       },
-    ]);
-    const { Repository } = await prompt([
       {
         type: "input",
         name: "repository",
         message: "What is your Github repository name?",
       },
     ]);
-    object = await api.getUser(User, Repository);
+    object = await githubAPI.getUser(userName, repository);
     if (!object) {
-      console.error("Error: Repo not found!");
+      console.error("Repo not found!");
     } else {
       console.log(`${object.fullName} found!`);
     }
   } while (!object);
+
   Object.assign(
     object,
     await prompt([
@@ -49,7 +47,7 @@ const init = async (_) => {
         message: "What is the title project?",
       },
       {
-        type: "Description",
+        type: "input",
         name: "desc",
         message: "What is the description?",
       },
@@ -61,7 +59,7 @@ const init = async (_) => {
       {
         type: "input",
         name: "inst",
-        message: "What are the installation installation instructions?",
+        message: "Any installation instructions?",
       },
       {
         type: "input",
@@ -85,7 +83,7 @@ const init = async (_) => {
       },
     ])
   );
-  generateMD(ojbect.title, await generateReadMe(object));
+  generateMD(object.title, await generateReadMe(object));
 };
 
 init();
